@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+</head>
+<body>
+
+
+	<!-- Login And Register Fragment -->
+		<!-- Modal -->
+		<div th:fragment="login" class="modal fade" id="loginModal" data-bs-backdrop="static"
+			data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content login-content">
+					<main class="wrapper active-popup">
+						<div id="icon">
+							<span class="icon-close bg-secondary" data-bs-dismiss="modal"><i
+								class="bi bi-x"></i></span>
+						</div>
+
+						<!-- Login Form -->
+						<div class="container login-box">
+							<form method="post" th:action="@{/login}" th:object="${user}">
+								<h3 align="center">Login Here</h3>
+								<div align="center">
+									<h3 class="text-success d-inline" th:text="${message}"></h3>
+									<h3 class="text-success d-inline" th:text="${back}"></h3>
+								</div>
+
+								<hr>
+								<div class="mb-3 input-box1">
+									<label for="email">Email</label> <input type="text"
+										th:field="*{email}" />
+								</div>
+								<div class="mb-3 input-box1">
+									<label for="password">Password</label> <input type="password"
+										th:field="*{password}" />
+								</div>
+								<div class="mb-3 form-check">
+									<input type="checkbox" id="rememberMe" th:field="*{rememberMe}"
+										class="form-check-input" /> <label for="rememberMe"
+										class="form-check-label">Remember Me?</label>
+								</div>
+								<span class="text-danger" th:text="${error}"></span> <input
+									type="hidden" name="loginDateTime" th:field="*{loginDateTime}" />
+								<button type="submit" class="btn btn-secondary">Login</button>
+								<div class="login-register">
+									<p>
+										Don't have an account? <a href="#" class="register-link">Register
+											here</a>
+									</p>
+								</div>
+							</form>
+						</div>
+
+
+						<!-- Register Form -->
+						<div class="container register-box ">
+							<form method="post" th:action="@{/addUser}" th:object="${user}">
+								<h3 align="center">Register Here</h3>
+								<span class="text-danger" th:text="${registerMessage}"></span>
+								<hr>
+								<div class="input-box1">
+									<label for="name">Username</label> <input type="text"
+										th:field="*{name}" placeholder="Username" />
+								</div>
+								<div class="input-box1">
+									<label for="email">Email</label> <input type="text"
+										th:field="*{email}" placeholder="Email" />
+								</div>
+								<div class="input-box1">
+									<label for="phoneNumber">PhoneNumber</label> <input type="text"
+										th:field="*{phoneNumber}" placeholder="Phonenumber" />
+								</div>
+								<div class="input-box1">
+									<label for="password">Password</label> <input type="password"
+										th:field="*{password}" placeholder="Password" />
+								</div>
+								<div class="input-box1">
+									<label for="confirmPassword">Confirm Password</label> <input
+										type="password" th:field="*{comfirmPassword}"
+										placeholder="Comfirm Password" />
+								</div>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="Check"
+										name="agree" required /> <label class="form-check-label"
+										for="Check">I agree to the terms and conditions</label>
+								</div>
+								<button type="submit" class="btn btn-secondary">Register</button>
+								<div class="login-register">
+									<p>
+										Already have an account? <a href="#" class="login-link">Login
+											here</a>
+									</p>
+								</div>
+							</form>
+						</div>
+					</main>
+				</div>
+			</div>
+		</div>
+		
+	<!-- Login And Register Fragment -->
+	
+
+</body>
+</html>
