@@ -20,7 +20,7 @@ public class UserValidator implements Validator {
 	public void validate(Object target, Errors error) {
 		// TODO Auto-generated method stub
 		ValidationUtils.rejectIfEmptyOrWhitespace(error,"name", "required.name","Field name is required!");
-		
+
 	}
 
 }

@@ -2,8 +2,11 @@ package com.ai.jwd42.service;
 
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ai.jwd42.dto.Restaurant;
 import com.ai.jwd42.dto.User;
 import com.ai.jwd42.repo.UserRepository;
 
@@ -13,18 +16,66 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public boolean checkEmailandPassword(String email, String passowrd) {
+	public List<User> findCustomer(int id) {
+
+		List<User> users = userRepository.findCustomer(id);
+		return users;
+	}
+
+	public boolean checkEmailandPasswordForUser(String email, String password) {
 
 		User user = userRepository.findUserByEmail(email);
 		if (user == null) {
 			return false;
 		} else {
-			if (passowrd.equals(user.getPassword())) {
+			if (user.getRoleId() == 1) {
+				if (BCrypt.checkpw(password, user.getPassword())) {
+
+					return true;
+				}
+			}
+
+		}
+
+		return false;
+	}
+
+	public boolean checkEmailandPasswordForOwner(String email, String password) {
+
+		User user = userRepository.findUserByEmail(email);
+		if (user == null) {
+			return false;
+		} else {
+			if (BCrypt.checkpw(password, user.getPassword()) && user.getRoleId() == 2) {
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	public boolean checkEmailandPasswordForAdmin(String email, String password) {
+
+		User user = userRepository.findUserByEmail(email);
+		if (user == null) {
+			return false;
+		} else {
+			if (BCrypt.checkpw(password, user.getPassword()) && user.getRoleId() == 3) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public User findUserByEmail(String email) {
+		User user = userRepository.findUserByEmail(email);
+		return user;
+	}
+
+	public List<User> findAllUserRole() {
+
+		return userRepository.findAllUserRole();
 	}
 
 	public List<User> findAllUser() {
@@ -40,6 +91,27 @@ public class UserService {
 		} else {
 			return true;
 		}
+	}
+
+	public int userRowCount(String email) {
+		User user = userRepository.findUserByEmail(email);
+		if (user == null) {
+			return 0;
+		} else {
+			return userRepository.userRowCount(user.getRestaurantId());
+		}
+	}
+
+	public int userRow() {
+		return userRepository.countrow();
+	}
+
+	public int ownerRow() {
+		return userRepository.ownercountrow();
+	}
+
+	public int restaurantRow() {
+		return userRepository.restaurantcountrow();
 	}
 
 	public boolean checkPhoneNumberAlreadyExistAtUpdate(String phone_number, int id) {
@@ -92,21 +164,40 @@ public class UserService {
 		userRepository.deleteUser(id);
 	}
 
-	public boolean checkPassword(String passowrd, int id) {
+	public void changePassword(String passowrd, String email) {
 
-		User user = userRepository.findUserById(id);
+		userRepository.changePassword(email, passowrd);
 
-		if (passowrd.equals(user.getPassword())) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
-	public void changePassword(String passowrd, int id) {
+	public User findByEmail(String email) {
+		UserRepository userRepo = new UserRepository();
+		return userRepo.findUserByEmail(email);
+	}
 
-		userRepository.changePassword(id, passowrd);
+	public boolean checkOwner(Restaurant restaurant) {
+		if (restaurant.getOwnername().length() > 40 || restaurant.getOwneremail().length() > 40
+				|| restaurant.getOwnerPhone().length() > 20 || restaurant.getOwneraddress().length() > 255) {
+			return true;
+		}
+		return false;
+	}
 
+	public boolean checkUserIsEmpty(User user) {
+		if (user.getName() == null || user.getName().equals("") || user.getEmail() == null || user.getEmail().equals("")
+				|| user.getPhoneNumber() == null || user.getPhoneNumber().equals("") || user.getAddress() == null
+				|| user.getAddress().equals("")) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean checkUserInput(User user) {
+		if (user.getName().length() > 40 || user.getEmail().length() > 40 || user.getPhoneNumber().length() > 20
+				|| user.getAddress().length() > 255) {
+			return true;
+		}
+		return false;
 	}
 
 }
