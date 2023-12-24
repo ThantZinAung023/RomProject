@@ -1,16 +1,15 @@
+.login-content {
+	width: fit-content;
+	background-color: transparent;
+	border: none;
+}
 
-
-.login-content{
-        width: fit-content;
-        background-color: transparent;
-        border:none;
-    }
-  .wrapper {
+.wrapper {
 	position: relative;
 	z-index: 99;
-	backdrop-filter: blur(10px);
+	backdrop-filter: blur(25px);
 	background: transparent;
-	width: 350px;
+	width: 380px;
 	height: 500px;
 	border-radius: 20px;
 	display: flex;
@@ -29,7 +28,7 @@
 }
 
 .modal-dialog {
-	margin-top: 200px;
+	margin-top: 100px;
 }
 
 .modalBtn {
@@ -50,7 +49,7 @@
 }
 
 .form-active {
-	height: 720px;
+	height: 840px;
 }
 
 .active-popup {
@@ -121,6 +120,7 @@
 	font-weight: 600;
 	color: #1a1110;
 }
+
 button#logout {
 	margin: 0px;
 	padding: 6px 6px;

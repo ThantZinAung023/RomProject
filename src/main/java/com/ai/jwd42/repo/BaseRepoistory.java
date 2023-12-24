@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class BaseRepoistory {
 
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/ace_electric";
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/foodies";
 	private static final String DB_UserName = "root";
 	private static final String DB_UserPassword = "tza885288";
 
